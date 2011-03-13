@@ -3,6 +3,7 @@ goog.provide('Application')
 goog.require 'Stage'
 goog.require 'Bitmap'
 goog.require 'Ticker'
+goog.require 'box2d.Util'
 
 ###
 @ constructor
@@ -21,7 +22,7 @@ class Application
     
     this._dx = Application.delta;
     this._dy = Application.delta;
-    Ticker.addListener(this)
+    box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
 
   tick: () ->
     s = this._shape
@@ -36,7 +37,8 @@ class Application
     s.x += this._dx
     s.y += this._dy
     this._stage.update();
+    box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
 
 Application.imageSrc = '../images/pixellab.png'
 Application.imageSize = 192
-Application.delta = 10
+Application.delta = 5

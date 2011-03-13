@@ -3,6 +3,7 @@ goog.provide('Application');
 goog.require('Stage');
 goog.require('Bitmap');
 goog.require('Ticker');
+goog.require('box2d.Util');
 /*
 @ constructor
 @ param {!HTMLCanvasElement} canvas
@@ -18,7 +19,7 @@ Application = (function() {
     this._stage.addChild(this._shape);
     this._dx = Application.delta;
     this._dy = Application.delta;
-    Ticker.addListener(this);
+    box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
   }
   Application.prototype.tick = function() {
     var s;
@@ -35,10 +36,11 @@ Application = (function() {
     }
     s.x += this._dx;
     s.y += this._dy;
-    return this._stage.update();
+    this._stage.update();
+    return box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
   };
   return Application;
 })();
 Application.imageSrc = '../images/pixellab.png';
 Application.imageSize = 192;
-Application.delta = 10;
+Application.delta = 5;
