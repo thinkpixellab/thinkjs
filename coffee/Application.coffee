@@ -28,17 +28,18 @@ class Application
     s = this._shape
     if s.x < 0
       this._dx = Application.delta
-    else if s.x > (this.canvas.width - Application.imageSize)
+    else if s.x > (this.canvas.width - Application.imgWidth)
       this._dx = -Application.delta
     if s.y < 0
       this._dy = Application.delta
-    else if s.y > (this.canvas.height - Application.imageSize)
+    else if s.y > (this.canvas.height - Application.imgHeight)
       this._dy = -Application.delta
     s.x += this._dx
     s.y += this._dy
     this._stage.update();
     box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
 
-Application.imageSrc = '../images/pixellab.png'
-Application.imageSize = 192
+Application.imageSrc = '../images/pixellab_cropped.png'
+Application.imgWidth = 119
+Application.imgHeight = 95
 Application.delta = 5
