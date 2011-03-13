@@ -3,7 +3,7 @@
 	url = git://github.com/jarib/google-closure-library.git
 [submodule "deps/easel"]
 	path = deps/easel
-	url = git://github.com/kevmoo/EaselJS.git
+	url = git://github.com/thinkpixellab/EaselJS.git
 [submodule "deps/box2d"]
 	path = deps/box2d
 	url = git://github.com/thinkpixellab/box2d.git
