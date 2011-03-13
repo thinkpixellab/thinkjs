@@ -4,6 +4,12 @@ goog.require 'Stage'
 goog.require 'Bitmap'
 goog.require 'Ticker'
 goog.require 'box2d.Util'
+goog.require 'box2d.AABB'
+goog.require 'box2d.World'
+goog.require 'goog.math.Rect'
+goog.require 'box2d.BoxDef'
+goog.require 'box2d.BodyDef'
+goog.require 'goog.math.Vec2'
 
 ###
 @ constructor
@@ -13,35 +19,55 @@ class Application
   constructor: (@canvas) ->
     this._stage = new Stage(@canvas)
 
-    image = new Image();
-    image.src = Application.imageSrc
     
-    
-    this._shape = new Bitmap(image);
-    this._stage.addChild(this._shape);
-    
-    this._dx = Application.delta;
-    this._dy = Application.delta;
+    this._boundingBox = this._createBoundingBox();
+    this._world = this._createWorld()
+    this._shape = this._createShape()
+    this._stage.addChild(this._shape)
+
     Ticker.addListener(this)
 
   tick: () ->
     this._updateShape()
     this._stage.update()
 
-  _updateShape: () ->
-    s = this._shape
-    if s.x < 0
-      this._dx = Application.delta
-    else if s.x > (this.canvas.width - Application.imgWidth)
-      this._dx = -Application.delta
-    if s.y < 0
-      this._dy = Application.delta
-    else if s.y > (this.canvas.height - Application.imgHeight)
-      this._dy = -Application.delta
-    s.x += this._dx
-    s.y += this._dy
+  _createBoundingBox: () ->
+    currentRect = new goog.math.Rect(0, 0, this.canvas.width, this.canvas.height)
+    box = currentRect.toBox()
+    return box.expand(Application._extent, Application._extent, Application._extent, Application._extent)
+    
+  _createWorld: () ->
+    worldAABB = new box2d.AABB()
+    worldAABB.minVertex.Set(this._boundingBox.left, this._boundingBox.top)
+    worldAABB.maxVertex.Set(this._boundingBox.right, this._boundingBox.bottom)
+    return new box2d.World(worldAABB, Application._gravity, true)
 
-Application.imageSrc = '../images/pixellab_cropped.png'
-Application.imgWidth = 119
-Application.imgHeight = 95
-Application.delta = 5
+  _createShape: () ->
+    image = new Image()
+    image.src = Application._imageSrc
+    shape = new Bitmap(image)
+
+    bodyDef = new box2d.BoxDef();
+    bodyDef.extents.Set(Application._imgWidth / 2, Application._imgHeight / 2);
+    bodyDef.density = 0.0002;
+    bodyDef.restitution = 0.95;
+    bodyDef.friction = 1.0;
+
+    boxBd = new box2d.BodyDef();
+    boxBd.AddShape(bodyDef);
+
+    shape._body = this._world.CreateBody(boxBd);
+    return shape
+
+  _updateShape: () ->
+    this._world.Step(1, 1)
+    s = this._shape
+    s.x = s._body.m_position.x;
+    s.y = s._body.m_position.y;
+    console.log(s.x, s.y)
+
+Application._imageSrc = '../images/pixellab_cropped.png'
+Application._imgWidth = 119
+Application._imgHeight = 95
+Application._extent = 100
+Application._gravity = new goog.math.Vec2(0, 10)
