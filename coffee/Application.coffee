@@ -22,7 +22,7 @@ class Application
     
     this._dx = Application.delta;
     this._dy = Application.delta;
-    box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
+    Ticker.addListener(this)
 
   tick: () ->
     s = this._shape
@@ -37,7 +37,6 @@ class Application
     s.x += this._dx
     s.y += this._dy
     this._stage.update();
-    box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
 
 Application.imageSrc = '../images/pixellab_cropped.png'
 Application.imgWidth = 119

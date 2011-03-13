@@ -19,7 +19,7 @@ Application = (function() {
     this._stage.addChild(this._shape);
     this._dx = Application.delta;
     this._dy = Application.delta;
-    box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
+    Ticker.addListener(this);
   }
   Application.prototype.tick = function() {
     var s;
@@ -36,8 +36,7 @@ Application = (function() {
     }
     s.x += this._dx;
     s.y += this._dy;
-    this._stage.update();
-    return box2d.Util.requestAnimFrame(goog.bind(this.tick, this));
+    return this._stage.update();
   };
   return Application;
 })();
