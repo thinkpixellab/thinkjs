@@ -29,10 +29,6 @@ class Application
 
     Ticker.addListener(this)
 
-  tick: () ->
-    this._updateShape()
-    this._stage.update()
-
   _createBoundingBox: () ->
     currentRect = new goog.math.Rect(0, 0, this.canvas.width, this.canvas.height)
     box = currentRect.toBox()
@@ -66,19 +62,11 @@ class Application
     shape._body = this._world.CreateBody(boxBd)
     return shape
 
-  _updateShape: () ->
-    this._world.Step(1/10, 1)
-    s = this._shape
-    s.x = s._body.m_position.x
-    s.y = s._body.m_position.y
-    s.rotation = goog.math.toDegrees(s._body.m_rotation)
-
-    return
-
   _addWalls: () ->
     this._addWall(new goog.math.Rect(0, 480, 640, 10))
     this._addWall(new goog.math.Rect(-10, 0, 10, 480))
     this._addWall(new goog.math.Rect(640, 0, 10, 480))
+    return
 
   _addWall: (rect) ->
     bodyDef = new box2d.BoxDef()
@@ -89,8 +77,19 @@ class Application
     boxBd = new box2d.BodyDef()
     boxBd.AddShape(bodyDef)
     boxBd.position.Set(rect.left + rect.width / 2, rect.top + rect.height / 2)
+    return
 
-    this._foo = this._world.CreateBody(boxBd)
+  tick: () ->
+    this._updateShape()
+    this._stage.update()
+    return
+
+  _updateShape: () ->
+    this._world.Step(1/10, 1)
+    s = this._shape
+    s.x = s._body.m_position.x
+    s.y = s._body.m_position.y
+    s.rotation = goog.math.toDegrees(s._body.m_rotation)
     return
 
 Application._imageSrc = '../images/pixellab_cropped.png'

@@ -26,10 +26,6 @@ Application = (function() {
     this._addWalls();
     Ticker.addListener(this);
   }
-  Application.prototype.tick = function() {
-    this._updateShape();
-    return this._stage.update();
-  };
   Application.prototype._createBoundingBox = function() {
     var box, currentRect;
     currentRect = new goog.math.Rect(0, 0, this.canvas.width, this.canvas.height);
@@ -63,18 +59,10 @@ Application = (function() {
     shape._body = this._world.CreateBody(boxBd);
     return shape;
   };
-  Application.prototype._updateShape = function() {
-    var s;
-    this._world.Step(1 / 10, 1);
-    s = this._shape;
-    s.x = s._body.m_position.x;
-    s.y = s._body.m_position.y;
-    s.rotation = goog.math.toDegrees(s._body.m_rotation);
-  };
   Application.prototype._addWalls = function() {
     this._addWall(new goog.math.Rect(0, 480, 640, 10));
     this._addWall(new goog.math.Rect(-10, 0, 10, 480));
-    return this._addWall(new goog.math.Rect(640, 0, 10, 480));
+    this._addWall(new goog.math.Rect(640, 0, 10, 480));
   };
   Application.prototype._addWall = function(rect) {
     var bodyDef, boxBd;
@@ -85,7 +73,18 @@ Application = (function() {
     boxBd = new box2d.BodyDef();
     boxBd.AddShape(bodyDef);
     boxBd.position.Set(rect.left + rect.width / 2, rect.top + rect.height / 2);
-    this._foo = this._world.CreateBody(boxBd);
+  };
+  Application.prototype.tick = function() {
+    this._updateShape();
+    this._stage.update();
+  };
+  Application.prototype._updateShape = function() {
+    var s;
+    this._world.Step(1 / 10, 1);
+    s = this._shape;
+    s.x = s._body.m_position.x;
+    s.y = s._body.m_position.y;
+    s.rotation = goog.math.toDegrees(s._body.m_rotation);
   };
   return Application;
 })();
