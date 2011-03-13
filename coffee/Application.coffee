@@ -25,6 +25,10 @@ class Application
     Ticker.addListener(this)
 
   tick: () ->
+    this._updateShape()
+    this._stage.update()
+
+  _updateShape: () ->
     s = this._shape
     if s.x < 0
       this._dx = Application.delta
@@ -36,7 +40,6 @@ class Application
       this._dy = -Application.delta
     s.x += this._dx
     s.y += this._dy
-    this._stage.update();
 
 Application.imageSrc = '../images/pixellab_cropped.png'
 Application.imgWidth = 119

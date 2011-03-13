@@ -22,6 +22,10 @@ Application = (function() {
     Ticker.addListener(this);
   }
   Application.prototype.tick = function() {
+    this._updateShape();
+    return this._stage.update();
+  };
+  Application.prototype._updateShape = function() {
     var s;
     s = this._shape;
     if (s.x < 0) {
@@ -35,8 +39,7 @@ Application = (function() {
       this._dy = -Application.delta;
     }
     s.x += this._dx;
-    s.y += this._dy;
-    return this._stage.update();
+    return s.y += this._dy;
   };
   return Application;
 })();
