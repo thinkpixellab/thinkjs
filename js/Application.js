@@ -49,13 +49,12 @@ Application = (function() {
     bodyDef = new box2d.BoxDef();
     bodyDef.extents.Set(Application._imgWidth / 2, Application._imgHeight / 2);
     bodyDef.density = 0.0002;
-    bodyDef.restitution = 1;
+    bodyDef.restitution = 0.99;
     bodyDef.friction = 0.5;
     boxBd = new box2d.BodyDef();
     boxBd.AddShape(bodyDef);
     boxBd.position.Set(320, 240);
-    boxBd.rotation = Math.PI / 2;
-    boxBd.angularVelocity = 2;
+    boxBd.angularVelocity = 1;
     shape._body = this._world.CreateBody(boxBd);
     return shape;
   };
@@ -73,6 +72,7 @@ Application = (function() {
     boxBd = new box2d.BodyDef();
     boxBd.AddShape(bodyDef);
     boxBd.position.Set(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    this._world.CreateBody(boxBd);
   };
   Application.prototype.tick = function() {
     this._updateShape();
