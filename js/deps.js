@@ -80,13 +80,13 @@ goog.addDependency("../../../easel/src/easeljs/display/Shape.js", ['Shape'], ['D
 goog.addDependency("../../../easel/src/easeljs/display/SpriteSheet.js", ['SpriteSheet'], []);
 goog.addDependency("../../../easel/src/easeljs/display/Stage.js", ['Stage'], ['Container']);
 goog.addDependency("../../../easel/src/easeljs/events/EaselMouseEvent.js", ['EaselMouseEvent'], []);
-goog.addDependency("../../../easel/src/easeljs/filters/BoxBlurFilter.js", ['BoxBlurFilter'], ['Filter']);
+goog.addDependency("../../../easel/src/easeljs/filters/BoxBlurFilter.js", ['BoxBlurFilter'], ['Filter', 'Rectangle']);
 goog.addDependency("../../../easel/src/easeljs/filters/ColorFilter.js", ['ColorFilter'], ['Filter']);
 goog.addDependency("../../../easel/src/easeljs/filters/ColorMatrixFilter.js", ['ColorMatrixFilter'], ['Filter']);
 goog.addDependency("../../../easel/src/easeljs/filters/Filter.js", ['Filter'], []);
 goog.addDependency("../../../easel/src/easeljs/geom/Matrix2D.js", ['Matrix2D'], []);
 goog.addDependency("../../../easel/src/easeljs/geom/Point.js", ['Point'], []);
-goog.addDependency("../../../easel/src/easeljs/geom/Rectangle.js", [], []);
+goog.addDependency("../../../easel/src/easeljs/geom/Rectangle.js", ['Rectangle'], []);
 goog.addDependency("../../../easel/src/easeljs/utils/SpriteSheetUtils.js", ['SpriteSheetUtils'], ['SpriteSheet']);
 goog.addDependency("../../../easel/src/easeljs/utils/Ticker.js", ['Ticker'], []);
 goog.addDependency("../../../easel/src/easeljs/utils/UID.js", ['UID'], []);
